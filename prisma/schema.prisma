@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model MessageSend {
+  id              String    @id
+  msg_seq         Int
+  mq_msg_id       String    @db.Char(48)
+  mq_correl_id    String    @db.Char(48)
+  status_msg      Int       @db.Integer
+  msg_error_proc  String
+  flag_proc       String
+  mq_qn_origem    String
+  mq_datetime     DateTime
+  mq_header       Bytes     @db.ByteA //512
+  security_header Bytes     @db.ByteA //332
+  nu_ope          String    @db.Char(23)
+  cod_msg         String    @db.Char(9)
+  msg             String    @db.Xml
+  piloto          Int
+  readAt          DateTime?
+  canceledAt      DateTime?
+  updateAt        DateTime  @updatedAt
+  createdAt       DateTime  @default(now())
+
+  @@index([createdAt])
+}
+
+model MessageReceive {
+  id              String    @id
+  msg_seq         Int
+  mq_msg_id       String    @db.Char(48)
+  mq_correl_id    String    @db.Char(48)
+  status_msg      Int       @db.Integer
+  msg_error_proc  String
+  flag_proc       String
+  mq_qn_origem    String
+  mq_datetime     DateTime
+  mq_header       Bytes     @db.ByteA //512
+  security_header Bytes     @db.ByteA //332
+  nu_ope          String    @db.Char(23)
+  cod_msg         String    @db.Char(9)
+  msg             String    @db.Xml
+  piloto          Bytes     @db.ByteA // 1
+  readAt          DateTime?
+  canceledAt      DateTime?
+  updateAt        DateTime  @updatedAt
+  createdAt       DateTime  @default(now())
+
+  @@index([createdAt])
+}
