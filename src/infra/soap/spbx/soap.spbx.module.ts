@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Inject } from '@nestjs/common';
 
 import { SoapModule } from 'nestjs-soap';
 import { SoapSPBxConfigService } from './soap.spbx.config.service';

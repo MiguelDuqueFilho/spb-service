@@ -1,4 +1,5 @@
-import { SoapSPBxModule } from '@infra/soap/soap.spbx.module';
+import { SoapCalculatorModule } from '@infra/soap/calculator/soap.calculator.module';
+import { SoapSPBxModule } from '@infra/soap/spbx/soap.spbx.module';
 import {
   MiddlewareConsumer,
   Module,
@@ -16,6 +17,7 @@ import { XMLMiddleware } from './xml/xml.middleware';
       isGlobal: true,
     }),
     ApiModule,
+    SoapCalculatorModule,
     SoapSPBxModule,
   ],
 })

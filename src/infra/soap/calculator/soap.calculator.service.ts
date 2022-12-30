@@ -2,18 +2,19 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Client } from 'nestjs-soap';
 
 @Injectable()
-export class SoapSPBxService {
+export class SoapCalculatorService {
   constructor(
-    @Inject('SOAP_SPBX_CLIENT') private readonly soapSPBxClient: Client,
+    @Inject('SOAP_CALCULATOR_CLIENT') private readonly soapClient: Client,
   ) {}
 
   async describe() {
-    return await this.soapSPBxClient.describe();
+    console.log(await this.soapClient);
+    return await this.soapClient.describe();
   }
 
   async add(inputs: object) {
     return new Promise((resolve, reject) => {
-      this.soapSPBxClient.Calculator.CalculatorSoap.Add(
+      this.soapClient.Calculator.CalculatorSoap.Add(
         inputs,
         (
           error: any,
@@ -36,7 +37,7 @@ export class SoapSPBxService {
 
   async subtract(inputs: object) {
     return new Promise((resolve, reject) => {
-      this.soapSPBxClient.Calculator.CalculatorSoap.Subtract(
+      this.soapClient.Calculator.CalculatorSoap.Subtract(
         inputs,
         (
           error: any,
@@ -59,7 +60,7 @@ export class SoapSPBxService {
 
   async multiply(inputs: object) {
     return new Promise((resolve, reject) => {
-      this.soapSPBxClient.Calculator.CalculatorSoap.Multiply(
+      this.soapClient.Calculator.CalculatorSoap.Multiply(
         inputs,
         (
           error: any,
@@ -82,7 +83,7 @@ export class SoapSPBxService {
 
   async divide(inputs: object) {
     return new Promise((resolve, reject) => {
-      this.soapSPBxClient.Calculator.CalculatorSoap.Divide(
+      this.soapClient.Calculator.CalculatorSoap.Divide(
         inputs,
         (
           error: any,

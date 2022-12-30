@@ -6,16 +6,14 @@ import {
 } from 'nestjs-soap';
 
 @Injectable()
-export class SoapSPBxConfigService implements SoapModuleOptionsFactory {
+export class SoapCalculatorConfigService implements SoapModuleOptionsFactory {
   constructor(
     @Inject(ConfigService) private readonly configService: ConfigService,
   ) {}
 
   createSoapModuleOptions(): SoapModuleOptionsFactoryType {
     return {
-      uri:
-        this.configService.get<string>('SOAP_URI') ||
-        'http://www.dneonline.com/calculator.asmx?WSDL',
+      uri: this.configService.get<string>('SOAP_CALCULATOR_URI') || '',
       auth: {
         type: 'basic',
         username: this.configService.get<string>('SOAP_USERNAME') || 'username',

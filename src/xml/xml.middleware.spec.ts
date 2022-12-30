@@ -1,7 +1,7 @@
-import { XmlMiddleware } from './xml.middleware';
+import { XMLMiddleware } from './xml.middleware';
 
 describe('XmlMiddleware', () => {
   it('should be defined', () => {
-    expect(new XmlMiddleware()).toBeDefined();
+    expect(new XMLMiddleware()).toBeDefined();
   });
 });
