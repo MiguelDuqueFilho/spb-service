@@ -3,7 +3,6 @@ import { Client } from 'nestjs-soap';
 
 @Injectable()
 export class SoapSPBxService {
-  private result = {};
   constructor(
     @Inject('SOAP_SPBX_CLIENT') private readonly soapSPBxClient: Client,
   ) {}
@@ -12,38 +11,95 @@ export class SoapSPBxService {
     return await this.soapSPBxClient.describe();
   }
 
-  async test(inputs: object) {
-    const callback = async function (
-      err: any,
-      result: object,
-      rawResponse: any,
-      soapHeader: any,
-      rawRequest: any,
-    ) {
-      if (err) {
-        console.log(err);
-        return err;
-      } else {
-        console.log(`result`);
-        console.log(result);
-        console.log(`rawResponse`);
-        console.log(rawResponse);
-        console.log(`soapHeader`);
-        console.log(soapHeader);
-        console.log(`rawRequest`);
-        console.log(rawRequest);
+  async add(inputs: object) {
+    return new Promise((resolve, reject) => {
+      this.soapSPBxClient.Calculator.CalculatorSoap.Add(
+        inputs,
+        (
+          error: any,
+          result: object,
+          rawResponse: any,
+          soapHeader: any,
+          rawRequest: any,
+        ) => {
+          if (error) reject(error);
+          resolve({
+            result,
+            rawResponse,
+            soapHeader,
+            rawRequest,
+          });
+        },
+      );
+    });
+  }
 
-        return result;
-      }
-    };
+  async subtract(inputs: object) {
+    return new Promise((resolve, reject) => {
+      this.soapSPBxClient.Calculator.CalculatorSoap.Subtract(
+        inputs,
+        (
+          error: any,
+          result: object,
+          rawResponse: any,
+          soapHeader: any,
+          rawRequest: any,
+        ) => {
+          if (error) reject(error);
+          resolve({
+            result,
+            rawResponse,
+            soapHeader,
+            rawRequest,
+          });
+        },
+      );
+    });
+  }
 
-    await this.soapSPBxClient.Calculator.CalculatorSoap.Multiply(
-      inputs,
-      callback,
-    );
+  async multiply(inputs: object) {
+    return new Promise((resolve, reject) => {
+      this.soapSPBxClient.Calculator.CalculatorSoap.Multiply(
+        inputs,
+        (
+          error: any,
+          result: object,
+          rawResponse: any,
+          soapHeader: any,
+          rawRequest: any,
+        ) => {
+          if (error) reject(error);
+          resolve({
+            result,
+            rawResponse,
+            soapHeader,
+            rawRequest,
+          });
+        },
+      );
+    });
+  }
 
-    const result = await this.soapSPBxClient.rawListeners;
-    console.log(result);
-    return { result };
+  async divide(inputs: object) {
+    return new Promise((resolve, reject) => {
+      this.soapSPBxClient.Calculator.CalculatorSoap.Divide(
+        inputs,
+        (
+          error: any,
+          result: object,
+          rawResponse: any,
+          soapHeader: any,
+          rawRequest: any,
+        ) => {
+          if (error) reject(error);
+          resolve({
+            result,
+            rawResponse,
+            soapHeader,
+            rawRequest,
+          });
+        },
+      );
+    });
   }
 }

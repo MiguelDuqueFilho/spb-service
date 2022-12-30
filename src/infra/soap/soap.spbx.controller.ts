@@ -22,9 +22,27 @@ export class SoapSPBxController {
     return await this.soapSPBxService.describe();
   }
 
-  @Post('test')
+  @Post('add')
   @HttpCode(HttpStatus.OK)
-  async test(@Body() body: object) {
-    return await this.soapSPBxService.test(body);
+  async add(@Body() body: object) {
+    return await this.soapSPBxService.add(body);
+  }
+
+  @Post('subtract')
+  @HttpCode(HttpStatus.OK)
+  async subtract(@Body() body: object) {
+    return await this.soapSPBxService.subtract(body);
+  }
+
+  @Post('multiply')
+  @HttpCode(HttpStatus.OK)
+  async multiply(@Body() body: object) {
+    return await this.soapSPBxService.multiply(body);
+  }
+
+  @Post('divide')
+  @HttpCode(HttpStatus.OK)
+  async divide(@Body() body: object) {
+    return await this.soapSPBxService.divide(body);
   }
 }
