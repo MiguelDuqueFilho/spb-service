@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { XMLParser, XMLValidator } from 'fast-xml-parser';
+import { XMLValidator } from 'fast-xml-parser';
 
 export const Xml = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
@@ -8,9 +8,7 @@ export const Xml = createParamDecorator(
     if (XMLValidator.validate(body) !== true) {
       return 'xml invalid';
     }
-    // const parser = new XMLParser();
-    // const xml = parser.parse(body);
-    // console.log(parser.parse(body));
+
     return body;
   },
 );

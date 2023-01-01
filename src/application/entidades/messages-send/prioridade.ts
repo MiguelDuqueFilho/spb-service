@@ -1,13 +1,13 @@
 export enum TipoPrioridade {
-  baixa, //* = 0
-  normal, //* = 1
-  alta, //* = 2
+  baixa = '0', //* = 0
+  normal = '1', //* = 1
+  alta = '2', //* = 2
 }
 
 export class Prioridade {
-  private readonly prioridade: number;
+  private readonly prioridade: string;
 
-  constructor(prioridade: number) {
+  constructor(prioridade: string) {
     const isPrioridadeValid = this.validatePrioridade(prioridade);
 
     if (!isPrioridadeValid) {
@@ -17,7 +17,7 @@ export class Prioridade {
     this.prioridade = prioridade;
   }
 
-  private validatePrioridade(prioridade: number): boolean {
+  private validatePrioridade(prioridade: string): boolean {
     switch (prioridade) {
       case TipoPrioridade.baixa:
       case TipoPrioridade.normal:
@@ -30,7 +30,7 @@ export class Prioridade {
     }
   }
 
-  get value(): number {
+  get value(): string {
     return this.prioridade;
   }
 }

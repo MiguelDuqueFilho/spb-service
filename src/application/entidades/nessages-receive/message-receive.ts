@@ -2,19 +2,17 @@ import { Replace } from '@helpers/Replace';
 import { randomUUID } from 'node:crypto';
 
 export interface MessageReceiveProps {
-  mqId: string;
-  msgId: number;
-  nuOp: string;
-  codMsg: string;
-  ispbEmissor: string;
-  msgXml: string;
-  ReceivedAt: Date;
-  statusMsg: number;
-  returnCode: number;
-  statusProc: number;
-  piloto: number;
-  dtBacenAt?: Date | null;
-  canceledAt?: Date | null;
+  mqId: string; //* identificador de fila (MQSeries/RSFN) da mensagem.
+  msgId: number; //* identificador único (SPBx/OBE) da mensagem enviada.
+  nuOp: string; //* identificador único da transação no SPB/RSFN.
+  codMsg: string; //* código da mensagem.
+  ispbEmissor: string; //* código ISPB da instituição emissora.
+  ispbDestino: string; //* código ISPB da instituição financeira para a qual se deseja enviar a mensagem.
+  receivedDate: string; //* data do recebimento da mensagem, no formato dd/mm/aaaa.
+  receivedTime: string; //* hora do recebimento da mensagem, no formato hh:mm:ss.
+  msgXml: string; //*  conteúdo da mensagem.
+  statusMsg: number; //* o método retornará CM_OK se houver sucesso. Em caso de erro, retornará um dos erros CMErros definidos neste documento.
+  receivedAt: Date;
   createdAt: Date;
 }
 
@@ -23,12 +21,16 @@ export class MessageReceive {
   private props: MessageReceiveProps;
 
   constructor(
-    props: Replace<MessageReceiveProps, { createdAt?: Date }>,
+    props: Replace<
+      MessageReceiveProps,
+      { receivedAt?: Date; createdAt?: Date }
+    >,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      receivedAt: props.receivedAt ?? new Date(),
       createdAt: props.createdAt ?? new Date(),
     };
   }
@@ -37,14 +39,7 @@ export class MessageReceive {
     return this._id;
   }
 
-  public get mqId() {
-    return this.props.mqId;
-  }
-  public set mqId(mqId: string) {
-    this.props.mqId = mqId;
-  }
-
-  public get msgId() {
+  public get msgId(): number {
     return this.props.msgId;
   }
   public set msgId(msgId: number) {
@@ -72,18 +67,32 @@ export class MessageReceive {
     this.props.ispbEmissor = ispbEmissor;
   }
 
+  public get ispbDestino() {
+    return this.props.ispbDestino;
+  }
+  public set ispbDestino(ispbDestino: string) {
+    this.props.ispbDestino = ispbDestino;
+  }
+
+  public get receivedDate(): string {
+    return this.props.receivedDate;
+  }
+  public set receivedDate(receivedDate: string) {
+    this.props.receivedDate = receivedDate;
+  }
+
+  public get receivedTime(): string {
+    return this.props.receivedTime;
+  }
+  public set receivedTime(receivedTime: string) {
+    this.props.receivedTime = receivedTime;
+  }
+
   public get msgXml() {
     return this.props.msgXml;
   }
   public set msgXml(msgXml: string) {
     this.props.msgXml = msgXml;
-  }
-
-  public get ReceivedAt() {
-    return this.props.ReceivedAt;
-  }
-  public set ReceivedAt(ReceivedAt: Date) {
-    this.props.ReceivedAt = ReceivedAt;
   }
 
   public get statusMsg() {
@@ -93,39 +102,8 @@ export class MessageReceive {
     this.props.statusMsg = statusMsg;
   }
 
-  public get returnCode() {
-    return this.props.returnCode;
-  }
-  public set returnCode(returnCode: number) {
-    this.props.returnCode = returnCode;
-  }
-
-  public get statusProc() {
-    return this.props.statusProc;
-  }
-  public set statusProc(statusProc: number) {
-    this.props.statusProc = statusProc;
-  }
-
-  public get piloto() {
-    return this.props.piloto;
-  }
-  public set piloto(piloto: number) {
-    this.props.piloto = piloto;
-  }
-
-  public get dtBacenAt(): Date | null | undefined {
-    return this.props.dtBacenAt;
-  }
-  public set dtBacen(nuOp: string | null | undefined) {
-    this.props.dtBacenAt = nuOp ? new Date(nuOp.substring(8)) : null;
-  }
-
-  public get canceledAt(): Date | null | undefined {
-    return this.props.canceledAt;
-  }
-  public cancel() {
-    this.props.canceledAt = new Date();
+  public get receivedAt(): Date {
+    return this.props.receivedAt;
   }
 
   public get createdAt(): Date {

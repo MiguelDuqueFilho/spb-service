@@ -8,7 +8,6 @@ export class SoapCalculatorService {
   ) {}
 
   async describe() {
-    console.log(await this.soapClient);
     return await this.soapClient.describe();
   }
 

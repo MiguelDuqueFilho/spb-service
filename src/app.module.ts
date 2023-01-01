@@ -7,7 +7,6 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
 import { ApiModule } from './infra/api/api.module';
 import { XMLMiddleware } from './xml/xml.middleware';
 

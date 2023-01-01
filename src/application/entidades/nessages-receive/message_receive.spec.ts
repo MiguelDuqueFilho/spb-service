@@ -8,15 +8,11 @@ describe('Message Received', () => {
       nuOp: 'string',
       codMsg: 'string',
       ispbEmissor: 'string',
-      msgXml: 'string',
-      ReceivedAt: new Date(),
+      ispbDestino: 'string',
+      receivedDate: '01/01/2023',
+      receivedTime: '15:00:00',
+      msgXml: '<DOC></DOC>',
       statusMsg: 0,
-      returnCode: 0,
-      statusProc: 0,
-      piloto: 0,
-      dtBacenAt: new Date(),
-      canceledAt: new Date(),
-      createdAt: new Date(),
     });
 
     expect(message).toBeTruthy();

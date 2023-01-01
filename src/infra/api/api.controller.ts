@@ -9,14 +9,11 @@ export class ApiController {
 
   @Get('/test')
   soapWsdl(@Req() req: Request) {
-    console.log(req);
     return this.apiService.soapWsdl();
   }
 
   @Post('/up')
   soapPost(@Body() body: any) {
-    console.log(`soap/up`);
-    console.log(body);
     return;
   }
 }

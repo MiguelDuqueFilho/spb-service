@@ -8,49 +8,39 @@ datasource db {
 }
 
 model MessageSend {
-  id              String    @id
-  msg_seq         Int
-  mq_msg_id       String    @db.Char(48)
-  mq_correl_id    String    @db.Char(48)
-  status_msg      Int       @db.Integer
-  msg_error_proc  String
-  flag_proc       String
-  mq_qn_origem    String
-  mq_datetime     DateTime
-  mq_header       Bytes     @db.ByteA //512
-  security_header Bytes     @db.ByteA //332
-  nu_ope          String    @db.Char(23)
-  cod_msg         String    @db.Char(9)
-  msg             String    @db.Xml
-  piloto          Int
-  readAt          DateTime?
-  canceledAt      DateTime?
-  updateAt        DateTime  @updatedAt
-  createdAt       DateTime  @default(now())
+  id             String    @id
+  msgId          Int //  @db.Integer //* identificador único (SPBx/OBE) da mensagem enviada.
+  nuOp           String // @db.Char(23) //* identificador único da transação no SPB/RSFN.
+  codMsg         String //* código da mensagem.
+  ispbEmissor    String //* código ISPB da instituição emissora.
+  ispbDestino    String //* código ISPB da instituição financeira para a qual se deseja enviar a mensagem.
+  priority       Int? //* PRIORIDADE_BAIXA = 0 - PRIORIDADE_NORMAL = 1 (default) - PRIORIDADE_ALTA = 2
+  schedulingType String? //* AGENDAMENTO_SEM_REPETICAO = 0 (default – 1 única vez) - AGENDAMENTO_OPERACAO_BACEN = 1 - AGENDAMENTO_COM_REPETICAO = 2 (repetição diária)
+  schedulingDate String? //* no formato dd/mm/aaaa.
+  schedulingTime String? //* no formato hh:mm.) da mensagem a ser removida.
+  msgXml         String // @db.Xml //*  conteúdo da mensagem.
+  statusMsg      Int // @db.Integer //* o método retornará CM_OK se houver sucesso. Em caso de erro, retornará um dos erros CMErros definidos neste documento.
+  sentAt         DateTime?
+  canceledAt     DateTime?
+  createdAt      DateTime  @default(now())
 
-  @@index([createdAt])
+  @@index([msgId])
 }
 
 model MessageReceive {
-  id              String    @id
-  msg_seq         Int
-  mq_msg_id       String    @db.Char(48)
-  mq_correl_id    String    @db.Char(48)
-  status_msg      Int       @db.Integer
-  msg_error_proc  String
-  flag_proc       String
-  mq_qn_origem    String
-  mq_datetime     DateTime
-  mq_header       Bytes     @db.ByteA //512
-  security_header Bytes     @db.ByteA //332
-  nu_ope          String    @db.Char(23)
-  cod_msg         String    @db.Char(9)
-  msg             String    @db.Xml
-  piloto          Bytes     @db.ByteA // 1
-  readAt          DateTime?
-  canceledAt      DateTime?
-  updateAt        DateTime  @updatedAt
-  createdAt       DateTime  @default(now())
+  id           String    @id
+  mqId         String //* identificador de fila (MQSeries/RSFN) da mensagem.
+  msgId        Int //  @db.Integer //* identificador único (SPBx/OBE) da mensagem enviada.
+  nuOp         String // @db.Char(23) //* identificador único da transação no SPB/RSFN.
+  codMsg       String //* código da mensagem.
+  ispbEmissor  String //* código ISPB da instituição emissora.
+  ispbDestino  String //* código ISPB da instituição financeira para a qual se deseja enviar a mensagem.
+  receivedDate String //* data do recebimento da mensagem, no formato dd/mm/aaaa.
+  receivedTime String //* hora do recebimento da mensagem, no formato hh:mm:ss.
+  msgXml       String // @db.Xml //*  conteúdo da mensagem.
+  statusMsg    Int //* o método retornará CM_OK se houver sucesso. Em caso de erro, retornará um dos erros CMErros definidos neste documento.
+  receivedAt   DateTime?
+  createdAt    DateTime  @default(now())
 
-  @@index([createdAt])
+  @@index([msgId])
 }

@@ -1,13 +1,13 @@
 export enum Agendamento {
-  semRepeticao, //* = 0  (default – 1 única vez)
-  operacaoBacen, //* = 1
-  comRepeticao, //* = 2 (repetição diária)
+  semRepeticao = '0', //* = 0  (default – 1 única vez)
+  operacaoBacen = '1', //* = 1
+  comRepeticao = '2', //* = 2 (repetição diária)
 }
 
 export class TipoAgendamento {
-  private readonly tipoAgendamento: number;
+  private readonly tipoAgendamento: string;
 
-  constructor(tipoAgendamento: number) {
+  constructor(tipoAgendamento: string) {
     const isTipoAgendamentoValid =
       this.validateTipoAgendamento(tipoAgendamento);
 
@@ -18,7 +18,7 @@ export class TipoAgendamento {
     this.tipoAgendamento = tipoAgendamento;
   }
 
-  private validateTipoAgendamento(tipoAgendamento: number): boolean {
+  private validateTipoAgendamento(tipoAgendamento: string): boolean {
     switch (tipoAgendamento) {
       case Agendamento.semRepeticao:
       case Agendamento.operacaoBacen:
@@ -31,7 +31,7 @@ export class TipoAgendamento {
     }
   }
 
-  get value(): number {
+  get value(): string {
     return this.tipoAgendamento;
   }
 }

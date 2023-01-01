@@ -6,7 +6,5 @@ export class ReceiveMessage {
   constructor(private messageReceiveRepository: MessageReceiveRepository) {}
 
   // async execute(request: ReceiveMessageRequest) {
-  async execute() {
-    console.log(`receive Message`);
-  }
+  async execute() {}
 }

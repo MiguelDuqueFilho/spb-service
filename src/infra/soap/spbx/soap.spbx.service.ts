@@ -33,6 +33,10 @@ export class SoapSPBxService {
   }
 
   async conectar(inputs: IConnetarInputs): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#Conectar',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.Conectar(
         inputs,
@@ -56,6 +60,10 @@ export class SoapSPBxService {
   }
 
   async desconectar(inputs: IDesconectarInputs): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#Desconectar',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.Desconectar(
         inputs,
@@ -79,6 +87,10 @@ export class SoapSPBxService {
   }
 
   async status(inputs: IStatusInputs): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#Status',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.Status(
         inputs,
@@ -102,6 +114,10 @@ export class SoapSPBxService {
   }
 
   async mensagensNaFila(inputs: object): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#MensagensNaFila',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.MensagensNaFila(
         inputs,
@@ -125,6 +141,10 @@ export class SoapSPBxService {
   }
 
   async buscarMensagem(inputs: IBuscarMensagemInputs): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#BuscarMensagem',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.BuscarMensagem(
         inputs,
@@ -150,6 +170,10 @@ export class SoapSPBxService {
   async removerMensagem(
     inputs: IRemoverMensagemInputs,
   ): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#RemoverMensagem',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.RemoverMensagem(
         inputs,
@@ -173,6 +197,10 @@ export class SoapSPBxService {
   }
 
   async enviarMensagem(inputs: object): Promise<ISoapResponse> {
+    this.soapClient.addSoapHeader({
+      SOAPAction: 'urn:cmspb#cmspb#EnviarMensagem',
+    });
+
     return new Promise((resolve, reject) => {
       this.soapClient.Envelope.Body.EnviarMensagem(
         inputs,
