@@ -6,16 +6,17 @@ describe('Message Send', () => {
   it('should be able create a message Send', () => {
     const message = new MessageSend({
       msgId: 1,
+      originId: 'string',
       nuOp: 'string',
       codMsg: 'string',
       ispbEmissor: 'string',
       ispbDestino: 'string',
       msgXml: '<DOCX></DOC>',
       statusMsg: 0,
-      priority: new Prioridade(TipoPrioridade.normal).value,
-      schedulingType: new TipoAgendamento(Agendamento.operacaoBacen).value,
-      schedulingDate: '01/01/2023',
-      schedulingTime: '15:00:00',
+      prioridade: new Prioridade(TipoPrioridade.normal).value,
+      tipoAgendamento: new TipoAgendamento(Agendamento.operacaoBacen).value,
+      dataAgendamento: '01/01/2023',
+      horaAgendamento: '15:00:00',
       sentAt: new Date(),
       createdAt: new Date(),
     });

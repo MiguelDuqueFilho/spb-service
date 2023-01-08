@@ -7,9 +7,9 @@ export interface MessageReceiveProps {
   nuOp: string; //* identificador único da transação no SPB/RSFN.
   codMsg: string; //* código da mensagem.
   ispbEmissor: string; //* código ISPB da instituição emissora.
+  dataRecebimento: string; //* data do recebimento da mensagem, no formato dd/mm/aaaa.
+  horaRecebimento: string; //* hora do recebimento da mensagem, no formato hh:mm:ss.
   ispbDestino: string; //* código ISPB da instituição financeira para a qual se deseja enviar a mensagem.
-  receivedDate: string; //* data do recebimento da mensagem, no formato dd/mm/aaaa.
-  receivedTime: string; //* hora do recebimento da mensagem, no formato hh:mm:ss.
   msgXml: string; //*  conteúdo da mensagem.
   statusMsg: number; //* o método retornará CM_OK se houver sucesso. Em caso de erro, retornará um dos erros CMErros definidos neste documento.
   receivedAt: Date;
@@ -17,6 +17,7 @@ export interface MessageReceiveProps {
 }
 
 export class MessageReceive {
+  [x: string]: any;
   private _id: string;
   private props: MessageReceiveProps;
 
@@ -74,18 +75,18 @@ export class MessageReceive {
     this.props.ispbDestino = ispbDestino;
   }
 
-  public get receivedDate(): string {
-    return this.props.receivedDate;
+  public get dataRecebimento(): string {
+    return this.props.dataRecebimento;
   }
-  public set receivedDate(receivedDate: string) {
-    this.props.receivedDate = receivedDate;
+  public set dataRecebimento(dataRecebimento: string) {
+    this.props.dataRecebimento = dataRecebimento;
   }
 
-  public get receivedTime(): string {
-    return this.props.receivedTime;
+  public get horaRecebimento(): string {
+    return this.props.horaRecebimento;
   }
-  public set receivedTime(receivedTime: string) {
-    this.props.receivedTime = receivedTime;
+  public set horaRecebimento(horaRecebimento: string) {
+    this.props.horaRecebimento = horaRecebimento;
   }
 
   public get msgXml() {

@@ -1,5 +1,7 @@
-import { SoapCalculatorModule } from '@infra/soap/calculator/soap.calculator.module';
-import { SoapSPBxModule } from '@infra/soap/spbx/soap.spbx.module';
+import { DatabaseModule } from '@infra/database/database.module';
+import { HttpModule } from '@infra/http/http.module';
+import { MessagingModule } from '@infra/messaging/messaging.module';
+
 import {
   MiddlewareConsumer,
   Module,
@@ -7,17 +9,18 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ApiModule } from './infra/api/api.module';
-import { XMLMiddleware } from './xml/xml.middleware';
+import { XMLMiddleware } from './middleware/xml/xml.middleware';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ApiModule,
-    SoapCalculatorModule,
-    SoapSPBxModule,
+    // SoapCalculatorModule,
+    // SoapSPBxModule,
+    HttpModule,
+    DatabaseModule,
+    MessagingModule,
   ],
 })
 export class AppModule implements NestModule {

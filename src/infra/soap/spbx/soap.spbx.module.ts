@@ -1,9 +1,10 @@
-import { Module, Inject } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { SoapModule } from 'nestjs-soap';
 import { SoapSPBxConfigService } from './soap.spbx.config.service';
-import { SoapSPBxController } from './soap.spbx.controller';
+import { SoapSPBxController } from './controllers/soap.spbx.controller';
 import { SoapSPBxService } from './soap.spbx.service';
+import { ProcessSendToSPB } from '@application/use-cases/process-message-to-spb';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { SoapSPBxService } from './soap.spbx.service';
     }),
   ],
   controllers: [SoapSPBxController],
-  providers: [SoapSPBxService],
+  providers: [SoapSPBxService, ProcessSendToSPB],
 })
 export class SoapSPBxModule {}

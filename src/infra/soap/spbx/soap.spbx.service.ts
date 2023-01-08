@@ -14,7 +14,7 @@ import {
   ISoapResponse,
   IStatusInputs,
   IStatusResponse,
-} from './soap.spbx.controller';
+} from './controllers/soap.spbx.controller';
 
 // const headers = {
 //   'Content-Type': 'text/xml; charset=utf-8',

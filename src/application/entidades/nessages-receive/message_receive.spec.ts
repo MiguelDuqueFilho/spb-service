@@ -9,8 +9,8 @@ describe('Message Received', () => {
       codMsg: 'string',
       ispbEmissor: 'string',
       ispbDestino: 'string',
-      receivedDate: '01/01/2023',
-      receivedTime: '15:00:00',
+      dataRecebimento: '01/01/2023',
+      horaRecebimento: '15:00:00',
       msgXml: '<DOC></DOC>',
       statusMsg: 0,
     });

@@ -2,18 +2,19 @@ import { Replace } from '@helpers/Replace';
 import { randomUUID } from 'node:crypto';
 
 export interface MessageSendProps {
-  msgId: number; //* identificador único (SPBx/OBE) da mensagem enviada.
-  nuOp: string; //* identificador único da transação no SPB/RSFN.
-  codMsg: string; //* código da mensagem.
-  ispbEmissor: string; //* código ISPB da instituição emissora.
-  ispbDestino: string; //* código ISPB da instituição financeira para a qual se deseja enviar a mensagem.
-  priority: string; //* PRIORIDADE_BAIXA = 0 - PRIORIDADE_NORMAL = 1 (default) - PRIORIDADE_ALTA = 2
-  schedulingType?: string | null; //* AGENDAMENTO_SEM_REPETICAO = 0 (default – 1 única vez) - AGENDAMENTO_OPERACAO_BACEN = 1 - AGENDAMENTO_COM_REPETICAO = 2 (repetição diária)
-  schedulingDate?: string | null; //* no formato dd/mm/aaaa.
-  schedulingTime?: string | null; //* no formato hh:mm.) da mensagem a ser removida.
-  msgXml: string; //*  conteúdo da mensagem.
-  statusMsg: number; //* o método retornará CM_OK se houver sucesso. Em caso de erro, retornará um dos erros CMErros definidos neste documento.
-  sentAt: Date;
+  originId: string;
+  msgId: number | null;
+  nuOp: string;
+  codMsg: string;
+  ispbEmissor: string;
+  ispbDestino: string;
+  prioridade?: number | null;
+  tipoAgendamento?: string | null;
+  dataAgendamento?: string | null;
+  horaAgendamento?: string | null;
+  msgXml: string;
+  statusMsg: number;
+  sentAt?: Date | null;
   canceledAt?: Date | null;
   createdAt: Date;
 }
@@ -23,13 +24,18 @@ export class MessageSend {
   private props: MessageSendProps;
 
   constructor(
-    props: Replace<MessageSendProps, { createAt?: Date }>,
+    props: Replace<
+      MessageSendProps,
+      { msgId?: number; statusMsg?: number; createAt?: Date }
+    >,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
     this.props = {
       ...props,
-      createdAt: props.createAt ?? new Date(),
+      msgId: props.msgId ?? null, //* ainda não processada
+      statusMsg: props.statusMsg ?? -1, //* ainda não processada
+      createdAt: props.createdAt ?? new Date(),
     };
   }
 
@@ -37,10 +43,17 @@ export class MessageSend {
     return this._id;
   }
 
-  public get msgId(): number {
+  public get originId(): string {
+    return this.props.originId;
+  }
+  public set originId(originId: string) {
+    this.props.originId = originId;
+  }
+
+  public get msgId(): number | null | undefined {
     return this.props.msgId;
   }
-  public set msgId(msgId: number) {
+  public setMsgId(msgId: number) {
     this.props.msgId = msgId;
   }
 
@@ -72,32 +85,32 @@ export class MessageSend {
     this.props.ispbDestino = ispbDestino;
   }
 
-  public get priority() {
-    return this.props.priority;
+  public get prioridade(): number | null | undefined {
+    return this.props.prioridade;
   }
-  public set priority(priority: string) {
-    this.props.priority = priority;
-  }
-
-  public get schedulingType(): string | null | undefined {
-    return this.props.schedulingType;
-  }
-  public set schedulingType(schedulingType: string | null | undefined) {
-    this.props.schedulingType = schedulingType;
+  public set prioridade(prioridade: number | null | undefined) {
+    this.props.prioridade = prioridade;
   }
 
-  public get schedulingDate(): string | null | undefined {
-    return this.props.schedulingDate;
+  public get tipoAgendamento(): string | null | undefined {
+    return this.props.tipoAgendamento;
   }
-  public set schedulingDate(schedulingDate: string | null | undefined) {
-    this.props.schedulingDate = schedulingDate;
+  public set tipoAgendamento(tipoAgendamento: string | null | undefined) {
+    this.props.tipoAgendamento = tipoAgendamento;
   }
 
-  public get schedulingTime(): string | null | undefined {
-    return this.props.schedulingTime;
+  public get dataAgendamento(): string | null | undefined {
+    return this.props.dataAgendamento;
   }
-  public set schedulingTime(schedulingTime: string | null | undefined) {
-    this.props.schedulingTime = schedulingTime;
+  public set dataAgendamento(dataAgendamento: string | null | undefined) {
+    this.props.dataAgendamento = dataAgendamento;
+  }
+
+  public get horaAgendamento(): string | null | undefined {
+    return this.props.horaAgendamento;
+  }
+  public set horaAgendamento(horaAgendamento: string | null | undefined) {
+    this.props.horaAgendamento = horaAgendamento;
   }
 
   public get msgXml() {
@@ -114,11 +127,11 @@ export class MessageSend {
     this.props.statusMsg = statusMsg;
   }
 
-  public get sentAt(): Date {
+  public get sentAt(): Date | null | undefined {
     return this.props.sentAt;
   }
-  public set sentAt(sentAt: Date) {
-    this.props.sentAt = sentAt;
+  public sent() {
+    this.props.sentAt = new Date();
   }
 
   public get canceledAt(): Date | null | undefined {

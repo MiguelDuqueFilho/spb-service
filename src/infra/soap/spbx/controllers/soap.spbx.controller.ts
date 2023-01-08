@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 
-import { SoapSPBxService } from './soap.spbx.service';
+import { SoapSPBxService } from '../soap.spbx.service';
 
 export interface IConnetarInputs {
   ISPB: string; //* ISPB : código ISPB da Instituição.
