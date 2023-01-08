@@ -2,7 +2,7 @@ import { MessageSend } from '@application/entidades/messages-send/message-send';
 import { DatabaseMessageSendRepository } from '@application/repositories/database-message-send-repository';
 import { MessagingMessageSendRepository } from '@application/repositories/messaging-message-send-repository';
 import { xmlGetValue } from '@helpers/xml.util';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 interface SendMessageRequest {
   id: string;
@@ -12,12 +12,16 @@ interface SendMessageRequest {
 
 @Injectable()
 export class ProcessSendToSPB {
+  private readonly logger = new Logger(ProcessSendToSPB.name);
   constructor(
     private databaseMessageSendRepository: DatabaseMessageSendRepository,
     private messagingMessageSendRepository: MessagingMessageSendRepository,
   ) {}
 
   async execute(request: SendMessageRequest): Promise<void> {
+    this.logger.debug(`SendMessageRequest - request`);
+    this.logger.debug(request);
+
     const { id, codMsg, msgXml } = request;
 
     const nuOp = xmlGetValue(msgXml, 'NUOp');
@@ -34,17 +38,24 @@ export class ProcessSendToSPB {
       createdAt: new Date(),
     });
 
-    // console.log(message);
-
     //* soap send message
 
     //* gravar db
 
     message.setMsgId(1);
 
-    await this.databaseMessageSendRepository.create(message);
+    this.logger.debug(`databaseMessageSendRepository - message`);
+    this.logger.debug(message);
+
+    const responseDb = await this.databaseMessageSendRepository.create(message);
+
+    this.logger.debug(`messagingMessageSendRepository - responseDb`);
+    this.logger.debug(responseDb);
 
     //* send to pilot
+
+    this.logger.debug(`messagingMessageSendRepository - message`);
+    this.logger.debug(message);
 
     await this.messagingMessageSendRepository.publishToPilot(message);
   }

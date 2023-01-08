@@ -1,18 +1,21 @@
 import { DatabaseMessageSendRepository } from '@application/repositories/database-message-send-repository';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { Injectable, Logger } from '@nestjs/common';
+import { MessageSend as PrismaMessageSend } from '@prisma/client';
 import { MessageSend } from '@application/entidades/messages-send/message-send';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaMessageSendRepository
   implements DatabaseMessageSendRepository
 {
+  private readonly logger = new Logger(PrismaMessageSendRepository.name);
   constructor(private prisma: PrismaService) {}
 
-  async create(messageSend: MessageSend): Promise<void> {
+  async create(messageSend: MessageSend): Promise<PrismaMessageSend> {
+    this.logger.debug(`create - MessageSend`);
     // const raw = PrismaMessageSendMapper.toPrisma(messageSend);
 
-    await this.prisma.messageSend.create({
+    const responseCreate = await this.prisma.messageSend.create({
       data: {
         id: messageSend.id,
         originId: messageSend.originId,
@@ -32,5 +35,9 @@ export class PrismaMessageSendRepository
         createdAt: messageSend.createdAt,
       },
     });
+    this.logger.debug(`create - responseCreate`);
+    this.logger.debug(responseCreate);
+
+    return responseCreate;
   }
 }

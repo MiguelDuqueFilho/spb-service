@@ -1,9 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  OnModuleDestroy,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ServerKafka } from '@nestjs/microservices';
 import { Message, Partitioners } from 'kafkajs';
@@ -11,10 +6,8 @@ import { Message, Partitioners } from 'kafkajs';
 @Injectable()
 export class KafkaConsumerService
   extends ServerKafka
-  implements OnModuleInit, OnModuleDestroy
+  implements OnModuleDestroy
 {
-  async onModuleInit() {}
-
   async onModuleDestroy() {
     await this.close();
   }

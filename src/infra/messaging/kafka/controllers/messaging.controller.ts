@@ -20,30 +20,14 @@ export class MessagingController {
     @Payload()
     request: PayloadSendToServiceRequest,
   ) {
-    this.logger.log(`message_service - request`);
-    // this.logger.log(request);
+    this.logger.debug(`message_service - request`);
+    this.logger.debug(request);
     await this.processSendToSPB.execute(request);
   }
 
   @EventPattern('message_pilot')
   async handleMessageToPilotReceived(@Payload() request: any) {
-    this.logger.log(`message_pilot - request`);
-    this.logger.log(request);
+    this.logger.debug(`message_pilot - request`);
+    this.logger.debug(request);
   }
-
-  // @MessagePattern('message_pilot')
-  // HandleEventSendMessageToPilot(@Payload() message: MessageSend): any {
-  //   const realm = 'Nest';
-  //   const key = message.id;
-  //   this.logger.log(`MessagePattern - HandleEventSendMessageToPilot`);
-  //   this.logger.log(message);
-
-  //   return {
-  //     headers: {
-  //       kafka_nestRealm: realm,
-  //     },
-  //     key,
-  //     value: JSON.stringify(message),
-  //   };
-  // }
 }

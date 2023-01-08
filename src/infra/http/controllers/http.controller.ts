@@ -14,14 +14,7 @@ export class HttpController {
 
   @Post('/test')
   async testPost(@Body() body: any) {
-    console.log(`testpost`);
     await this.processPilotoTest.execute(body);
     return;
   }
-
-  // @Get('/test')
-  // async soapTest() {
-  //   await this.sendMessages.test('test');
-  //   return;
-  // }
 }

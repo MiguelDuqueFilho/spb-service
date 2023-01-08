@@ -15,8 +15,7 @@ export class KafkaMessageSendToPilotRepository
   constructor(private kafka: KafkaConsumerService) {}
 
   async publishToPilot(messageSend: MessageSend) {
-    this.logger.log(`publishToPilot - messageSend`);
-    this.logger.log(messageSend);
+    this.logger.debug(`publishToPilot - messageSend`);
 
     const topic = 'message_pilot';
     const message: Message[] = [
@@ -26,6 +25,7 @@ export class KafkaMessageSendToPilotRepository
       },
     ];
 
+    this.logger.debug(message);
     await this.kafka.publish(topic, message);
   }
 }
