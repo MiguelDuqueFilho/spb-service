@@ -1,3 +1,4 @@
+import { DatabaseModule } from '@infra/database/database.module';
 import { Module } from '@nestjs/common';
 
 import { SoapModule } from 'nestjs-soap';
@@ -7,6 +8,7 @@ import { SoapCalculatorService } from './soap.calculator.service';
 
 @Module({
   imports: [
+    DatabaseModule,
     SoapModule.forRootAsync({
       clientName: 'SOAP_CALCULATOR_CLIENT',
       useClass: SoapCalculatorConfigService,

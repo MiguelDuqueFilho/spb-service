@@ -1,6 +1,8 @@
 import { DatabaseModule } from '@infra/database/database.module';
 import { HttpModule } from '@infra/http/http.module';
 import { MessagingModule } from '@infra/messaging/messaging.module';
+import { SoapCalculatorModule } from '@infra/soap/calculator/soap.calculator.module';
+import { SoapSPBxModule } from '@infra/soap/spbx/soap.spbx.module';
 
 import {
   MiddlewareConsumer,
@@ -16,7 +18,7 @@ import { XMLMiddleware } from './middleware/xml/xml.middleware';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // SoapCalculatorModule,
+    SoapCalculatorModule,
     // SoapSPBxModule,
     HttpModule,
     DatabaseModule,
