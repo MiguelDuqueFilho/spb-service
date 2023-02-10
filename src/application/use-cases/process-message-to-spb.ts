@@ -7,7 +7,7 @@ import { Injectable, Logger } from '@nestjs/common';
 interface SendMessageRequest {
   id: string;
   codMsg: string;
-  msgXml: string;
+  xmlMessage: string;
 }
 
 @Injectable()
@@ -22,11 +22,11 @@ export class ProcessSendToSPB {
     this.logger.debug(`SendMessageRequest - request`);
     this.logger.debug(request);
 
-    const { id, codMsg, msgXml } = request;
+    const { id, codMsg, xmlMessage } = request;
 
-    const nuOp = xmlGetValue(msgXml, 'NUOp');
-    const ispbEmissor = xmlGetValue(msgXml, 'IdentdEmissor');
-    const ispbDestino = xmlGetValue(msgXml, 'IdentdDestinatario');
+    const nuOp = xmlGetValue(xmlMessage, 'NUOp');
+    const ispbEmissor = xmlGetValue(xmlMessage, 'IdentdEmissor');
+    const ispbDestino = xmlGetValue(xmlMessage, 'IdentdDestinatario');
 
     const message = new MessageSend({
       originId: id,
@@ -34,7 +34,7 @@ export class ProcessSendToSPB {
       codMsg,
       ispbEmissor,
       ispbDestino,
-      msgXml,
+      msgXml: xmlMessage,
       createdAt: new Date(),
     });
 

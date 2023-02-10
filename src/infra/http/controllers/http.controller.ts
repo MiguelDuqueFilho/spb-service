@@ -2,7 +2,7 @@ import { ProcessPilotoTest } from '@application/use-cases/process-piloto-test';
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 
-@Controller('api')
+@Controller('test')
 export class HttpController {
   constructor(private processPilotoTest: ProcessPilotoTest) {} // private sendMessages: SendMessages,
 

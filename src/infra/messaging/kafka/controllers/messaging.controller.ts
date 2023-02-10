@@ -6,7 +6,7 @@ import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 export interface PayloadSendToServiceRequest {
   id: string;
   codMsg: string;
-  msgXml: string;
+  xmlMessage: string;
 }
 
 @Controller()

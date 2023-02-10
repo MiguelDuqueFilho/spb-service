@@ -17,7 +17,7 @@ export class KafkaConsumerService
   ) {
     super({
       client: {
-        clientId: 'KafkaConsumer',
+        clientId: 'consumer-service',
         brokers: [configService.get<string>('KAFKA_BROKER') || ''],
         sasl: {
           mechanism: 'scram-sha-256',
@@ -27,7 +27,7 @@ export class KafkaConsumerService
         ssl: true,
       },
       consumer: {
-        groupId: 'service-consumer',
+        groupId: 'service',
       },
       producer: {
         createPartitioner: Partitioners.DefaultPartitioner,
